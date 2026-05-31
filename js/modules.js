@@ -3,7 +3,8 @@ const modules = [
     category: "Yoga",
     title: "Yoga Seja Leve",
     description: "O corpo não mente. Ele revela.",
-    url: "pages/yoga-seja-leve.html"
+    url: "pages/yoga-seja-leve.html",
+    image: "assets/images/yoga-seja-leve.jpg"
   },
   {
     category: "Jornada",

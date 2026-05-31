@@ -5,7 +5,7 @@ const menu = document.querySelector("[data-menu]");
 if (grid) {
   grid.innerHTML = modules.map((item) => `
     <a class="module-card" href="${item.url}">
-      <div class="module-cover" aria-hidden="true"></div>
+      <div class="module-cover" aria-hidden="true" ${item.image ? `style="background-image:url(${item.image});background-size:cover;background-position:center;"` : ""}></div>
       <p class="module-category">${item.category}</p>
       <h2 class="module-title">${item.title}</h2>
       <p class="module-description">${item.description}</p>
