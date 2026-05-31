@@ -1,27 +1,336 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jornada Seja Leve | Método Seja Leve</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/base.css" />
-  <link rel="stylesheet" href="../css/header.css" />
-  <link rel="stylesheet" href="../css/page.css" />
-  <link rel="stylesheet" href="../css/responsive.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jornada Seja Leve | Método Seja Leve</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../css/jornada.css">
 </head>
 <body>
-  <header class="site-header">
-    <a class="brand" href="../index.html"><span class="brand-icon">✦</span><span>Método Seja Leve</span></a>
-    <nav class="main-nav"><a href="../index.html">Portal</a><a href="admin.html">Admin</a><a href="login.html">Sair</a></nav>
-  </header>
-  <main class="section-narrow page-content">
-    <p class="eyebrow">Módulo</p>
-    <h1>Jornada Seja Leve</h1>
-    <p>Conteúdo do módulo. Edite este arquivo separadamente sem afetar a página principal.</p>
-    <a class="back-link" href="../index.html">← Voltar ao portal</a>
-  </main>
+<nav>
+  <div class="nav-brand">Seja <span>Leve</span></div>
+  <a class="portal-link" href="../index.html">Portal</a>
+  <div class="nav-tabs" id="nav-tabs">
+    <button class="nav-tab active" data-screen="home">Hoje</button>
+    <button class="nav-tab" data-screen="revisao">Revisão</button>
+    <button class="nav-tab" data-screen="tracker">Jornada</button>
+    <button class="nav-tab" data-screen="habitos">Hábitos</button>
+  </div>
+</nav>
+
+<!-- HOJE -->
+<div class="screen active" id="screen-home">
+  <div class="page-header">
+    <div class="section-label" id="lbl-dia">Dia 1 · Semana 1 · Reconhecer</div>
+    <div class="page-title">Reflexão</div>
+    <span class="phase-badge f1" id="home-badge">Fase 1 · Despertar</span>
+  </div>
+
+
+
+  <div class="card">
+    <div class="card-header"><span class="card-label">Intenção &amp; Foco do dia</span></div>
+    <div class="card-body">
+      <textarea class="field" id="f-intencao" rows="2" placeholder="O que quero carregar hoje?"></textarea>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="card-label">Check-in emocional</span></div>
+    <div class="card-body">
+      <div style="display:flex;gap:8px;margin-bottom:10px">
+        <div style="flex:1">
+          <div class="field-label" style="margin-bottom:4px">Energia</div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <input type="range" id="r-energia" min="1" max="10" value="5" style="flex:1;height:3px;accent-color:var(--sage);cursor:pointer">
+            <span id="v-energia" style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--sage);min-width:18px">5</span>
+          </div>
+        </div>
+        <div style="flex:1">
+          <div class="field-label" style="margin-bottom:4px">Presença</div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <input type="range" id="r-presenca" min="1" max="10" value="5" style="flex:1;height:3px;accent-color:var(--sage);cursor:pointer">
+            <span id="v-presenca" style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--sage);min-width:18px">5</span>
+          </div>
+        </div>
+      </div>
+      <textarea class="field" id="f-emocao" rows="2" placeholder="Que emoção predomina agora?"></textarea>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="card-label">Reflexão do dia</span></div>
+    <div class="card-body">
+      <div class="question" id="home-q">O que estou carregando que não é meu?</div>
+      <textarea class="field" id="f-reflexao" rows="4" placeholder="Escreva livremente..."></textarea>
+    </div>
+  </div>
+
+  <div id="hab-section">
+    <div style="padding:0 1.25rem;margin-bottom:6px"><div class="section-label">Hábitos do dia</div></div>
+    <div class="habits-list" id="habits-list"></div>
+  </div>
+
+  <div id="metrics-section" style="display:none">
+    <div style="padding:0 1.25rem;margin-bottom:6px;display:flex;align-items:center;justify-content:space-between">
+      <div class="section-label">Métricas</div>
+      <span class="met-badge" id="met-badge"></span>
+    </div>
+    <div class="metrics-wrap" id="metrics-content"></div>
+  </div>
+
+  <div class="pens-card" id="pens-section" style="display:none">
+    <div class="pens-title">🧠 O que minha mente criou hoje?</div>
+    <div class="field-label" style="margin-bottom:4px">Pensamento dominante</div>
+    <input class="line-field" id="p-pen" placeholder="Uma frase..." style="margin-bottom:10px">
+    <div class="field-label" style="margin-bottom:4px">Emoção que ele carrega</div>
+    <input class="line-field" id="p-emo" placeholder="Uma palavra..." style="margin-bottom:10px">
+    <div class="field-label" style="margin-bottom:6px">É fato ou interpretação?</div>
+    <div class="yesno-row" style="margin-bottom:10px">
+      <button class="yn-btn yn-yes" id="pf-sim" data-pf="1">Fato</button>
+      <button class="yn-btn yn-no" id="pf-nao" data-pf="0">Interpretação</button>
+    </div>
+    <div class="field-label" style="margin-bottom:4px">Nova perspectiva (opcional)</div>
+    <input class="line-field" id="p-persp" placeholder="Como posso ver diferente?">
+  </div>
+
+  <div class="celeb-card" id="celeb-section" style="display:none">
+    <div class="celeb-title">✨ Celebrando os Sinais do Novo Caminho</div>
+    <div class="mantra-block"><div class="mantra-text" id="mantra-txt">Isso já faz parte do que estou construindo.</div></div>
+    <div class="field-label" style="margin-bottom:4px">Qual sinal do novo caminho reconheço hoje?</div>
+    <input class="line-field" id="c-sinal" placeholder="Um gesto, uma palavra, uma sensação..." style="margin-bottom:10px">
+    <div class="field-label" style="margin-bottom:4px">Como me senti ao perceber?</div>
+    <input class="line-field" id="c-senti" placeholder="Uma palavra ou frase curta...">
+  </div>
+
+  <div id="fase2-tools" style="display:none">
+    <div style="padding:0 1.25rem;margin-bottom:6px"><div class="section-label">Ferramentas de hoje</div></div>
+    <div class="fase2-tools-grid">
+      <div class="f2tool-btn" id="btn-ref"><div style="font-size:22px;margin-bottom:4px">🍽</div><div style="font-size:12px;font-weight:500;color:var(--warm-dark)">Refeição Consciente</div><div style="font-size:10px;color:var(--warm-light)">App Ferramentas</div></div>
+      <div class="f2tool-btn" id="btn-sos"><div style="font-size:22px;margin-bottom:4px">🚨</div><div style="font-size:12px;font-weight:500;color:var(--warm-dark)">SOS Alerta</div><div style="font-size:10px;color:var(--warm-light)">App Ferramentas</div></div>
+    </div>
+  </div>
+
+  <div class="custom-hab-card" id="custom-hab-card" style="display:none">
+    <div class="section-label" style="margin-bottom:8px">⬇️ Hábito que quero diminuir</div>
+    <p style="font-size:12px;color:var(--warm-mid);line-height:1.6;margin-bottom:10px">Com base nos seus padrões de fuga identificados — qual hábito quer observar e diminuir?</p>
+    <div class="field-label" style="margin-bottom:4px">Qual hábito?</div>
+    <div style="display:flex;gap:8px;margin-bottom:10px">
+      <input class="line-field" id="ch-input" placeholder="Ex: redes sociais, açúcar, série à noite..." style="flex:1">
+      <button id="btn-save-ch" style="padding:6px 14px;background:var(--sage);color:white;border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;white-space:nowrap">Salvar</button>
+    </div>
+    <div class="field-label" style="margin-bottom:6px">Padrão de fuga</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap" id="cat-row">
+      <button class="sess-btn cat-btn" data-cat="estimulante">⚡ Estimulante</button>
+      <button class="sess-btn cat-btn" data-cat="anestesico">😶 Anestésico</button>
+      <button class="sess-btn cat-btn" data-cat="satisfacao">🎯 Imediato</button>
+      <button class="sess-btn cat-btn" data-cat="validacao">👥 Validação</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="card-label">Rituais de Ancoragem</span></div>
+    <div class="card-body">
+      <div class="anchor-row">
+        <div class="anc-btn" id="anc-manha" data-anc="manha"><span>🌅</span><span class="anc-lbl">Manhã</span></div>
+        <div class="anc-btn" id="anc-meio" data-anc="meio"><span>☀️</span><span class="anc-lbl">Meio-dia</span></div>
+        <div class="anc-btn" id="anc-noite" data-anc="noite"><span>🌙</span><span class="anc-lbl">Noite</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="card-label">Insights · Aprendizado &amp; Gratidão</span></div>
+    <div class="card-body">
+      <textarea class="field" id="f-insights" rows="3" placeholder="O que aprendi ou sou grato(a) hoje?"></textarea>
+    </div>
+  </div>
+
+  <div class="day-nav">
+    <button class="day-nav-btn" id="btn-prev">← Anterior</button>
+    <button class="day-nav-btn" id="btn-next">Próximo →</button>
+  </div>
+  <button class="save-btn" id="btn-save">Salvar dia</button>
+  <div class="export-row">
+    <button class="exp-btn secondary" id="btn-import">↑ Importar</button>
+    <button class="exp-btn primary" id="btn-export">↓ Exportar</button>
+  </div>
+  <input type="file" id="file-input" accept=".json" style="display:none">
+  <div class="bottom-spacer"></div>
+</div>
+
+<!-- REVISÃO -->
+<div class="screen" id="screen-revisao">
+  <div class="page-header">
+    <div class="section-label">Revisão Semanal</div>
+    <div class="page-title">Revisão</div>
+  </div>
+  <div style="padding:0 1.25rem 3px;display:flex;align-items:center;gap:8px">
+    <span style="font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--sage);min-width:42px">Fase 1</span>
+    <div style="display:flex;gap:4px;overflow-x:auto">
+      <button class="sess-btn sel" data-rw="1">Sem 1</button>
+      <button class="sess-btn" data-rw="2">Sem 2</button>
+      <button class="sess-btn" data-rw="3">Sem 3</button>
+      <button class="sess-btn" data-rw="4">Sem 4</button>
+      <button class="sess-btn" data-rw="cp1">Cp 1</button>
+    </div>
+  </div>
+  <div style="padding:3px 1.25rem 3px;display:flex;align-items:center;gap:8px">
+    <span style="font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--sand);min-width:42px">Fase 2</span>
+    <div style="display:flex;gap:4px;overflow-x:auto">
+      <button class="sess-btn" data-rw="5">Sem 5</button>
+      <button class="sess-btn" data-rw="6">Sem 6</button>
+      <button class="sess-btn" data-rw="7">Sem 7</button>
+      <button class="sess-btn" data-rw="8">Sem 8</button>
+      <button class="sess-btn" data-rw="cp2">Cp 2</button>
+    </div>
+  </div>
+  <div style="padding:3px 1.25rem 10px;display:flex;align-items:center;gap:8px">
+    <span style="font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);min-width:42px">Fase 3</span>
+    <div style="display:flex;gap:4px;overflow-x:auto">
+      <button class="sess-btn" data-rw="9">Sem 9</button>
+      <button class="sess-btn" data-rw="10">Sem 10</button>
+      <button class="sess-btn" data-rw="11">Sem 11</button>
+      <button class="sess-btn" data-rw="12">Sem 12</button>
+      <button class="sess-btn" data-rw="cp3">Cp 3</button>
+    </div>
+  </div>
+  <div style="padding:0 1.25rem;margin-bottom:8px"><div class="section-label" id="rev-label">Semana 1 · Reconhecer · Dia 7</div></div>
+  <div id="rev-content"></div>
+  <div class="bottom-spacer"></div>
+</div>
+
+<!-- JORNADA -->
+<div class="screen" id="screen-tracker">
+  <div class="page-header">
+    <div class="section-label">90 dias · visão geral</div>
+    <div class="page-title">Jornada</div>
+  </div>
+  <div style="padding:0 1.25rem 1rem">
+    <div class="section-label" style="margin-bottom:8px">Mapa dos dias</div>
+    <div class="days-grid" id="days-grid"></div>
+    <div style="display:flex;gap:10px;font-size:11px;color:var(--warm-light)">
+      <span>● Hoje</span><span style="color:var(--sage)">● Registrado</span><span>○ Futuro</span>
+    </div>
+  </div>
+  <div style="padding:0 1.25rem;margin-bottom:6px"><div class="section-label">Sprints</div></div>
+  <div style="padding:0 1.25rem" id="sprints-map"></div>
+  <div class="bottom-spacer"></div>
+</div>
+
+<!-- HÁBITOS -->
+<div class="screen" id="screen-habitos">
+  <div class="page-header">
+    <div class="section-label">Guia completo</div>
+    <div class="page-title">Hábitos</div>
+  </div>
+
+  <!-- ══ FASE 1 · DESPERTAR ══ -->
+  <div style="padding:.6rem 1.25rem .4rem;border-top:1px solid var(--sand-light);margin-top:6px">
+    <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--sage);margin-bottom:1px">Fase 1 · Sprint 1 · Sem métrica</div>
+    <div style="font-size:14px;font-weight:500;color:var(--warm-dark)">Semana 1 · Reconhecer · Base fisiológica</div>
+    <div style="font-size:11px;color:var(--warm-light);margin-top:1px">Dias 1–7</div>
+  </div>
+  <div class="tool-card" id="tc-agua">
+    <div class="tool-header" data-tool="agua"><div class="tool-icon" style="background:#e8f4fd">💧</div><div style="flex:1"><div class="tool-name">Hidratação</div><div class="tool-sub">Base fisiológica · 8 copos/dia · sem métrica nesta semana</div></div><span class="tool-chev">›</span></div>
+    <div class="tool-body"><span class="wtag s1">Sem 1 · Sprint 1</span><p style="font-size:13px;color:var(--warm-mid);line-height:1.7;margin-bottom:10px">8 copos de água por dia (250ml cada). Não é sobre perfeição — é sobre começar a notar o corpo e criar o ritmo.</p><div class="tool-step"><div class="step-num">1</div><div><div class="step-title">Comece simples</div><div class="step-desc">Marque o hábito no diário. Sem contar copos ainda — apenas a intenção de hidratar.</div></div></div><div class="tool-step"><div class="step-num">2</div><div><div class="step-title">O que notar</div><div class="step-desc">Energia, clareza mental, fome vs sede. O corpo começa a comunicar mais.</div></div></div><div class="tool-note">Sprint 1: apenas marque o hábito. Métrica (copos) entra na Semana 3 · Sprint 2.</div></div>
+  </div>
+  <div class="tool-card" id="tc-sono">
+    <div class="tool-header" data-tool="sono"><div class="tool-icon" style="background:#f0f0f8">🌙</div><div style="flex:1"><div class="tool-name">Sono</div><div class="tool-sub">Regulação fisiológica · observação dos padrões · sem métrica nesta semana</div></div><span class="tool-chev">›</span></div>
+    <div class="tool-body"><span class="wtag s1">Sem 1 · Sprint 1</span><p style="font-size:13px;color:var(--warm-mid);line-height:1.7;margin-bottom:10px">O sono é o principal regulador emocional. Observar os padrões revela muito sobre o sistema nervoso antes de qualquer mudança.</p><div class="tool-step"><div class="step-num">1</div><div><div class="step-title">Observe sem mudar</div><div class="step-desc">Esta semana, só observe: que horas você dorme? Acorda descansado(a)? O que o sono diz sobre o dia?</div></div></div><div class="tool-step"><div class="step-num">2</div><div><div class="step-title">Respeite os sinais</div><div class="step-desc">Sonolência, energia, humor ao acordar — são dados valiosos. Registre no campo de insights.</div></div></div><div class="tool-note">Sprint 1: apenas marque o hábito. Métrica (horários + qualidade) entra na Semana 3 · Sprint 2.</div></div>
+  </div>
+  <div class="tool-card" id="tc-resp">
+    <div class="tool-header" data-tool="resp"><div class="tool-icon" style="background:#eef3ee">🫁</div><div style="flex:1"><div class="tool-name">Respiração consciente</div><div class="tool-sub">Regulação do sistema nervoso · 1–3 sessões intencionais</div></div><span class="tool-chev">›</span></div>
+    <div class="tool-body"><span class="wtag s1">Sem 1 · Sprint 1</span><p style="font-size:13px;color:var(--warm-mid);line-height:1.7;margin-bottom:10px">A respiração é a única função autônoma que você controla conscientemente. É a porta de entrada direta para o sistema nervoso parassimpático.</p><div class="tool-step"><div class="step-num">1</div><div><div class="step-title">1–3 sessões intencionais</div><div class="step-desc">5 minutos de respiração 4-7-8, coerência cardíaca (5s in · 5s out), ou simplesmente notar a respiração sem mudar.</div></div></div><div class="tool-step"><div class="step-num">2</div><div><div class="step-title">Quando usar</div><div class="step-desc">Ao acordar, antes de dormir, em momentos de tensão. Não precisa ser técnica — qualquer pausa consciente conta.</div></div></div><div class="tool-note">Sprint 1: sem métrica. Sprint 2: registre sessões e uso espontâneo nas métricas.</div></div>
+  </div>
+  <div style="padding:.6rem 1.25rem .4rem;border-top:1px solid var(--sand-light);margin-top:6px">
+    <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--sage);margin-bottom:1px">Fase 1 · Sprint 1 · Sem métrica</div>
+    <div style="font-size:14px;font-weight:500;color:var(--warm-dark)">Semana 2 · Observar · Presença e Percepção</div>
+    <div style="font-size:11px;color:var(--warm-light);margin-top:1px">Dias 8–14</div>
+  </div>
+  <div class="tool-card" id="tc-atencao">
+    <div class="tool-header" data-tool="atencao"><div class="tool-icon" style="background:#fef9f0">🎯</div><div style="flex:1"><div class="tool-name">Atenção plena</div><div class="tool-sub">Presença total · 1 atividade por dia · sem métrica nesta semana</div></div><span class="tool-chev">›</span></div>
+    <div class="tool-body"><span class="wtag s1">Sem 2 · Sprint 1</span><p style="font-size:13px;color:var(--warm-mid);line-height:1.7;margin-bottom:10px">Uma atividade por dia com presença total — sem tela, sem multitarefa. Pode ser comer, caminhar, tomar banho, lavar a louça. O que importa é estar inteiro(a) lá.</p><div class="tool-step"><div class="step-num">1</div><div><div class="step-title">Escolha 1 atividade</div><div class="step-desc">Qual atividade cotidiana você vai fazer hoje com presença total? Decida pela manhã.</div></div></div><div class="tool-step"><div class="step-num">2</div><div><div class="step-title">Como praticar</div><div class="step-desc">Ative os 5 sentidos. Se a mente derivar, volte gentilmente sem julgamento.</div></div></div><div class="tool-note">Sem 2: apenas pratique. Métrica (presença 1–5 + qual atividade) entra na Semana 3 · Sprint 2.</div></div>
+  </div>
+  <div class="tool-card" id="tc-prazer">
+    <div class="tool-header" data-tool="prazer"><div class="tool-icon" style="background:#fdf0f8">✨</div><div style="flex:1"><div class="tool-name">Prazer & alegria</div><div class="tool-sub">1 microprazer/dia · saborear no presente · sem métrica nesta semana</div></div><span class="tool-chev">›</span></div>
+    <div class="tool-body"><span class="wtag s1">Sem 2 · Sprint 1</span><p style="font-size:13px;color:var(--warm-mid);line-height:1.7;margin-bottom:10px">1 microprazer por dia — simples, acessível, saboreado no presente. Não precisa ser grande para ser real. Café, sol no rosto, música, silêncio.</p><div class="tool-step"><div class="step-num">1</div><div><div class="step-title">Identifique antes</div><div class="step-desc">Pela manhã: qual pequeno prazer vou me permitir hoje?</div></div></div><div class="tool-step"><div class="step-num">2</div><div><div class="step-title">Saborear é a prática</div><div class="step-desc">Estar presente durante o prazer é o hábito. Não só realizá-lo.</div></div></div><div class="tool-note">Sem 2: apenas pratique. Métrica (qual prazer + intensidade 1–5) entra na Semana 3 · Sprint 2.</div></div>
+  </div>
+  <div class="tool-card" id="tc-pensamentos">
+    <div class="tool-header" data-tool="pensamentos"><div class="tool-icon" style="background:var(--lav-pale)">🧠</div><div style="flex:1"><div class="tool-name">Percepção dos pensamentos</div><div class="tool-sub">Observar sem julgar · à noite · Semanas 2–4</div></div><span class="tool-chev">›</span></div>
+    <div class="tool-body"><span class="wtag s2">Sem 2 · Sprint 1–2</span><p style="font-size:13px;color:var(--warm-mid);line-height:1.7;margin-bottom:10px">À noite, depois dos eventos do dia — não para ruminação, mas para observação curiosa. O que a mente fabricou hoje?</p><div class="tool-step"><div class="step-num">1</div><div><div class="step-title">Pensamento dominante</div><div class="step-desc">1 frase. Qual pensamento mais apareceu? Registre no diário sem julgamento.</div></div></div><div class="tool-step"><div class="step-num">2</div><div><div class="step-title">Fato ou interpretação?</div><div class="step-desc">O que você está assumindo como verdade que pode ser apenas uma leitura possível?</div></div></div><div class="tool-step"><div class="step-num">3</div><div><div class="step-title">Nova perspectiva (opcional)</div><div class="step-desc">Se esse pensamento pudesse ser visto de outro ângulo, qual seria? Não é obrigatório — só se surgir.</div></div></div><div class="tool-note">Aparece no diário da Semana 2 até o final da Fase 1. Não aparece na Fase 2.</div></div>
+  </div>
+  <div style="padding:.6rem 1.25rem .4rem;border-top:1px solid var(--sand-light);margin-top:6px">
+    <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--sage);margin-bottom:1px">Fase 1 · Sprint 2 · Métricas ativas</div>
+    <div style="font-size:14px;font-weight:500;color:var(--warm-dark)">Semanas 3–4 · Identificar e Compreender · Sprint 2 com métricas</div>
+    <div style="font-size:11px;color:var(--warm-light);margin-top:1px">Dias 15–30</div>
+  </div>
+  <div style="margin:0 1.25rem 10px;background:var(--sage-pale);border:1px solid var(--sage-light);border-radius:14px;padding:12px 14px">
+    <div style="font-size:11px;font-weight:500;color:var(--sage);margin-bottom:6px">✓ Métricas ativas a partir do Dia 16</div>
+    <div style="font-size:12px;color:var(--warm-mid);line-height:1.7">Agora o diário mostra campos de registro para cada hábito: copos de água, horário e qualidade do sono, sessões de respiração, nível de presença na atenção plena e qual foi o microprazer do dia.</div>
+  </div>
+  <!-- ══ FASE 2 · INTEGRAÇÃO ══ -->
+  <div style="padding:.6rem 1.25rem .4rem;border-top:1px solid var(--sand-light);margin-top:6px">
+    <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--sand);margin-bottom:1px">Fase 2 · Sprint 3 · Sem métrica</div>
+    <div style="font-size:14px;font-weight:500;color:var(--warm-dark)">Semana 5 · Acolher · Refeição Consciente</div>
+    <div style="font-size:11px;color:var(--warm-light);margin-top:1px">Dias 31–37</div>
+  </div>
+  <div class="tool-card" id="tc-refeicao">
+    <div class="tool-header" data-tool="refeicao"><div class="tool-icon" style="background:#fef9f0">🍽</div><div style="flex:1"><div class="tool-name">Refeição com atenção plena</div><div class="tool-sub">Presença à mesa · sem métrica nesta semana</div></div><span class="tool-chev">›</span></div>
+    <div class="tool-body"><span class="wtag s2">Sem 5 · Sprint 3</span><p style="font-size:13px;color:var(--warm-mid);line-height:1.7;margin-bottom:10px">Uma refeição consciente por dia. O objetivo não é comer "correto" — é estar presente. Sem tela, sem pressa, sem julgamento.</p><div class="tool-step"><div class="step-num">1</div><div><div class="step-title">Escolha a refeição</div><div class="step-desc">Qual das refeições de hoje você vai fazer com plena presença?</div></div></div><div class="tool-step"><div class="step-num">2</div><div><div class="step-title">Como praticar</div><div class="step-desc">Antes: 3 respirações. Durante: ative os sentidos — textura, temperatura, sabor, cheiro. Observe o ritmo.</div></div></div><div class="tool-step"><div class="step-num">3</div><div><div class="step-title">O que observar</div><div class="step-desc">Que emoção estava presente? Você notou quando ficou satisfeito(a)? O corpo tinha fome real?</div></div></div><div class="tool-note">Sem 5–6 (Sprint 3): apenas pratique, sem métrica. Métrica de presença, velocidade e saciedade começa na Semana 7 · Sprint 4.</div></div>
+  </div>
+  <div style="padding:.6rem 1.25rem .4rem;border-top:1px solid var(--sand-light);margin-top:6px">
+    <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--sand);margin-bottom:1px">Fase 2 · Sprint 3 · Sem métrica</div>
+    <div style="font-size:14px;font-weight:500;color:var(--warm-dark)">Semana 6 · Praticar · SOS Alerta</div>
+    <div style="font-size:11px;color:var(--warm-light);margin-top:1px">Dias 38–44</div>
+  </div>
+  <div class="tool-card" id="tc-sos">
+    <div class="tool-header" data-tool="sos"><div class="tool-icon" style="background:#fef0f0">🚨</div><div style="flex:1"><div class="tool-name">SOS Alerta</div><div class="tool-sub">Autodiagnóstico em tempo real · sem métrica nesta semana</div></div><span class="tool-chev">›</span></div>
+    <div class="tool-body"><span class="wtag s2">Sem 6 · Sprint 3</span><p style="font-size:13px;color:var(--warm-mid);line-height:1.7;margin-bottom:10px">Quando sentir alerta (ansiedade, tensão, mente acelerada, corpo travado): pare, identifique, nomeie e aja. É uma resposta normal do corpo — não é fraqueza.</p><div class="tool-step"><div class="step-num">1</div><div><div class="step-title">Identificar</div><div class="step-desc">Mente acelerada? Corpo tenso? Respiração curta? Vontade de fugir ou se anestesiar? Termômetro: de 0 a 100%, onde está o alerta?</div></div></div><div class="tool-step"><div class="step-num">2</div><div><div class="step-title">Nomear</div><div class="step-desc">Validar sem julgar: "Estou em alerta. É uma resposta do meu sistema nervoso. Posso me regular."</div></div></div><div class="tool-step"><div class="step-num">3</div><div><div class="step-title">Agir — regulação</div><div class="step-desc">Técnica de 5–10 min: respiração 4-7-8, movimento, água gelada no rosto, caminhar. Ou micro ação de 30 segundos se o alerta for muito alto.</div></div></div><div class="tool-step"><div class="step-num">4</div><div><div class="step-title">Padrões de fuga (observar)</div><div class="step-desc">O que você costuma fazer quando está em alerta? Redes sociais, comida, série, compras? Observe sem julgamento.</div></div></div><div class="tool-note">Sprint 3: apenas pratique o fluxo, sem registrar. Métrica (nível, gatilho, técnica) começa na Semana 7 · Sprint 4.</div></div>
+  </div>
+  <div style="padding:.6rem 1.25rem .4rem;border-top:1px solid var(--sand-light);margin-top:6px">
+    <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--sand);margin-bottom:1px">Fase 2 · Sprint 4 · Métricas ativas</div>
+    <div style="font-size:14px;font-weight:500;color:var(--warm-dark)">Semanas 7–8 · Consolidar e Integrar · Sprint 4 com métricas + hábito a diminuir</div>
+    <div style="font-size:11px;color:var(--warm-light);margin-top:1px">Dias 45–60</div>
+  </div>
+  <div style="margin:0 1.25rem 10px;background:var(--sand-pale);border:1px solid var(--sand-light);border-radius:14px;padding:12px 14px">
+    <div style="font-size:11px;font-weight:500;color:var(--sand);margin-bottom:6px">✓ Métricas ativas a partir do Dia 46</div>
+    <div style="font-size:12px;color:var(--warm-mid);line-height:1.7">O diário agora registra: presença na refeição (1–5), velocidade, saciedade, uso do SOS (nível de alerta, gatilho, técnica) e o <strong>hábito a diminuir</strong> — definido por você com base nos padrões de fuga identificados.</div>
+  </div>
+  <!-- ══ FASE 3 · EXPANSÃO ══ -->
+  <div style="padding:.6rem 1.25rem .4rem;border-top:1px solid var(--gold-light);margin-top:6px">
+    <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:1px">Fase 3 · Sprint 5 · Sem métrica</div>
+    <div style="font-size:14px;font-weight:500;color:var(--warm-dark)">Semanas 9–10 · Celebrar e Ancorar · Novos padrões</div>
+    <div style="font-size:11px;color:var(--warm-light);margin-top:1px">Dias 61–74</div>
+  </div>
+  <div class="tool-card" id="tc-celebracao">
+    <div class="tool-header" data-tool="celebracao"><div class="tool-icon" style="background:var(--gold-pale)">✨</div><div style="flex:1"><div class="tool-name">Celebrando os Sinais do Novo Caminho</div><div class="tool-sub">Nova mentalidade · reconhecer sinais · sem métrica nesta semana</div></div><span class="tool-chev">›</span></div>
+    <div class="tool-body"><span class="wtag s3">Sem 9–10 · Sprint 5</span><p style="font-size:13px;color:var(--warm-mid);line-height:1.7;margin-bottom:10px">A repetição acaba quando você para de esperar que o mundo mude primeiro e começa a confiar no que já está mudando dentro de você. O que aparece fora apenas confirma o que você já está gerando dentro.</p><div class="tool-step"><div class="step-num">1</div><div><div class="step-title">Preste atenção no detalhe</div><div class="step-desc">Um gesto de alguém, uma palavra, uma situação inesperada — são pistas do novo. Reconheça e diga mentalmente: "Isso já faz parte do que estou construindo."</div></div></div><div class="tool-step"><div class="step-num">2</div><div><div class="step-title">Valorize o instante</div><div class="step-desc">Um sorriso, um suspiro, uma sensação boa. Celebrar pode ser simples. Repita: "Eu vejo o que chegou e me abro para mais."</div></div></div><div class="tool-step"><div class="step-num">3</div><div><div class="step-title">Antes de dormir</div><div class="step-desc">Lembre-se de 1 ou 2 sinais do dia e agradeça de coração. Registre no campo "Insights" do diário.</div></div></div><div class="tool-note">Semanas 9–10 (Sprint 5): apenas vivencie. Métrica (sinal percebido + intensidade da gratidão 1–5) começa na Semana 11 · Sprint 6.</div></div>
+  </div>
+  <div class="tool-card" id="tc-movimento">
+    <div class="tool-header" data-tool="movimento"><div class="tool-icon" style="background:#f0faf0">🏃</div><div style="flex:1"><div class="tool-name">Movimento corporal</div><div class="tool-sub">Regulação do SN · liberação emocional · sol e natureza · sem métrica nesta semana</div></div><span class="tool-chev">›</span></div>
+    <div class="tool-body"><span class="wtag s3">Sem 9–10 · Sprint 5</span><p style="font-size:13px;color:var(--warm-mid);line-height:1.7;margin-bottom:10px">O corpo é o portal de transformação. Movimento regula o sistema nervoso, propulsiona liberações emocionais que a fala não alcança e ancora os novos padrões no físico.</p><div class="tool-step"><div class="step-num">1</div><div><div class="step-title">Movimento como regulação</div><div class="step-desc">Caminhada, dança livre, yoga, alongamento — o que o corpo pede. Não é performance. É escuta.</div></div></div><div class="tool-step"><div class="step-num">2</div><div><div class="step-title">Sol e natureza</div><div class="step-desc">15–20 min ao sol pela manhã regulam cortisol e melatonina. Natureza ativa o sistema parassimpático e reduz ansiedade de forma direta.</div></div></div><div class="tool-step"><div class="step-num">3</div><div><div class="step-title">Liberação emocional</div><div class="step-desc">Quando uma emoção está represada: movimento intenso (sacudir o corpo, correr, dançar) libera o que a fala não consegue.</div></div></div><div class="tool-step"><div class="step-num">4</div><div><div class="step-title">Ancoragem ao final</div><div class="step-desc">Pés no chão, 3 respirações lentas, 1 palavra do que o corpo comunica agora. Esse gesto ancora o novo estado.</div></div></div><div class="tool-note">Semanas 9–10: explore sem pressão. Métrica (tipo, duração, estado antes/depois, sol) começa na Semana 11 · Sprint 6.</div></div>
+  </div>
+  <div style="padding:.6rem 1.25rem .4rem;border-top:1px solid var(--gold-light);margin-top:6px">
+    <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:1px">Fase 3 · Sprint 6 · Métricas ativas</div>
+    <div style="font-size:14px;font-weight:500;color:var(--warm-dark)">Semanas 11–12 · Expandir e Celebrar · Desejo e Legado</div>
+    <div style="font-size:11px;color:var(--warm-light);margin-top:1px">Dias 75–90</div>
+  </div>
+  <div style="margin:0 1.25rem 10px;background:var(--gold-pale);border:1px solid var(--gold-light);border-radius:14px;padding:12px 14px">
+    <div style="font-size:11px;font-weight:500;color:var(--gold);margin-bottom:6px">✓ Métricas ativas a partir do Dia 76</div>
+    <div style="font-size:12px;color:var(--warm-mid);line-height:1.7">O diário registra: sinal do novo caminho percebido, intensidade da gratidão (1–5), tipo de movimento, duração, estado antes/depois e exposição ao sol. Mais o <strong>desejo do dia</strong> — 1 gesto concreto alinhado ao que você deseja.</div>
+  </div>
+  <div class="tool-card" id="tc-desejos">
+    <div class="tool-header" data-tool="desejos"><div class="tool-icon" style="background:#fdf5e0">🌟</div><div style="flex:1"><div class="tool-name">Desejos</div><div class="tool-sub">Expansão e realização · Sprint 5–6</div></div><span class="tool-chev">›</span></div>
+    <div class="tool-body"><span class="wtag s3">Sem 11–12 · Sprint 6</span><p style="font-size:13px;color:var(--warm-mid);line-height:1.7;margin-bottom:10px">Com os padrões antigos mais claros e os novos se consolidando, espaço se abre para o que você realmente deseja — não o que o medo pede, mas o que a alma busca.</p><div class="tool-step"><div class="step-num">1</div><div><div class="step-title">O desejo genuíno</div><div class="step-desc">O que você desejaria para sua vida se soubesse que daria certo? Escreva sem filtro de "é possível?"</div></div></div><div class="tool-step"><div class="step-num">2</div><div><div class="step-title">Medo ou desejo?</div><div class="step-desc">Medo contrai, fecha, protege. Desejo genuíno expande — mesmo que assuste. Como esse desejo soa no seu corpo?</div></div></div><div class="tool-step"><div class="step-num">3</div><div><div class="step-title">1 gesto no dia</div><div class="step-desc">Que ação pequena e concreta hoje se alinha com o que você deseja? Registre no diário nas métricas.</div></div></div><div class="tool-note">Semana 11: identifique o desejo. Semana 12: 1 gesto por dia e registre nas métricas.</div></div>
+  </div>
+  <div class="bottom-spacer"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="../js/jornada.js"></script>
 </body>
 </html>
