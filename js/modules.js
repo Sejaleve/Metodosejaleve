@@ -10,7 +10,8 @@ const modules = [
     category: "Jornada",
     title: "Jornada Seja Leve",
     description: "Sua rotina fala antes de você. Suas emoções confirmam.",
-    url: "pages/jornada-seja-leve.html"
+    url: "pages/jornada-seja-leve.html",
+    image: "assets/images/jornada-seja-leve.jpg"
   },
   {
     category: "Mentoria",
